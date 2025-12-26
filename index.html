@@ -28,6 +28,27 @@
             font-size: 1.1em;
             margin-bottom: 20px;
         }
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .time-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 70px;
+        }
+        .time-box span {
+            display: block;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        .time-box small {
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
         .email {
             font-weight: bold;
             color: #ffeb3b;
@@ -37,8 +58,54 @@
 <body>
     <div class="container">
         <h1>Coming Soon</h1>
-        <p>Our website is currently under construction.</p>
+        <p>Our website is launching soon.</p>
+
+        <div class="countdown">
+            <div class="time-box">
+                <span id="days">0</span>
+                <small>Days</small>
+            </div>
+            <div class="time-box">
+                <span id="hours">0</span>
+                <small>Hours</small>
+            </div>
+            <div class="time-box">
+                <span id="minutes">0</span>
+                <small>Minutes</small>
+            </div>
+            <div class="time-box">
+                <span id="seconds">0</span>
+                <small>Seconds</small>
+            </div>
+        </div>
+
         <p>Please contact us at <span class="email">TechnolyticsIndia@gmail.com</span></p>
     </div>
+
+    <script>
+        // Set your launch date here (YYYY-MM-DDTHH:MM:SS)
+        const launchDate = new Date("2026-01-31T00:00:00").getTime();
+
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.querySelector(".countdown").innerHTML = "We are live!";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").textContent = days;
+            document.getElementById("hours").textContent = hours;
+            document.getElementById("minutes").textContent = minutes;
+            document.getElementById("seconds").textContent = seconds;
+        }, 1000);
+    </script>
 </body>
 </html>
